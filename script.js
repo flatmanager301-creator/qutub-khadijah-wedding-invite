@@ -138,19 +138,21 @@
     }
   }
 
-  function createPetals(amount = 42) {
+  function createPetals(amount = 18) {
     const container = $("#petals");
     const template = $("#particleTemplate");
+    const fragment = document.createDocumentFragment();
     for (let index = 0; index < amount; index += 1) {
       const particle = template.content.firstElementChild.cloneNode(true);
       particle.style.left = `${Math.random() * 100}%`;
-      particle.style.setProperty("--duration", `${4.2 + Math.random() * 4}s`);
-      particle.style.setProperty("--drift", `${-120 + Math.random() * 240}px`);
-      particle.style.animationDelay = `${Math.random() * 1.15}s`;
+      particle.style.setProperty("--duration", `${3.6 + Math.random() * 2.4}s`);
+      particle.style.setProperty("--drift", `${-90 + Math.random() * 180}px`);
+      particle.style.animationDelay = `${Math.random() * .55}s`;
       particle.style.transform = `rotate(${Math.random() * 180}deg)`;
-      container.append(particle);
-      setTimeout(() => particle.remove(), 9500);
+      fragment.append(particle);
+      setTimeout(() => particle.remove(), 7000);
     }
+    container.append(fragment);
   }
 
   function showInvitation(instant = false) {
@@ -162,24 +164,26 @@
 
     const finishOpening = () => {
       intro.classList.add("opened");
-      setTimeout(() => $$(".hero .reveal").forEach((element, index) => {
-        setTimeout(() => element.classList.add("in-view"), index * 105);
-      }), instant ? 20 : 120);
+      setTimeout(() => 3074(".hero .reveal").forEach((element, index) => {
+        setTimeout(() => element.classList.add("in-view"), index * 85);
+      }), instant ? 10 : 80);
     };
 
     if (instant) finishOpening();
-    else setTimeout(finishOpening, 620);
+    else setTimeout(finishOpening, 340);
   }
 
   function openInvitation() {
     const envelope = $("#openInvite");
     const intro = $("#intro");
     if (envelope.classList.contains("is-opening")) return;
-    envelope.classList.add("is-opening");
-    intro.classList.add("is-transitioning");
-    createPetals(64);
+    requestAnimationFrame(() => {
+      envelope.classList.add("is-opening");
+      intro.classList.add("is-transitioning");
+      createPetals(18);
+    });
     try { sessionStorage.setItem("qk-invite-opened", "1"); } catch (_) { /* File previews may block storage. */ }
-    setTimeout(() => showInvitation(false), 1760);
+    setTimeout(() => showInvitation(false), 1320);
   }
 
   function initIntro() {
@@ -394,7 +398,7 @@
       start: "20270117T033000Z",
       end: "20270117T063000Z",
       location: "Taheri Manzil, Tayyeb Pura, Bohra Bakhal, Mandsaur",
-      description: "Wedding celebration of Qutubuddin and Khadijah. Dress code: White. Directions: https://maps.app.goo.gl/vPzPRF8h2ZnW9pin7?g_st=ac"
+      description: "Wedding celebration of Qutubuddin and Khadijah. Dress code: Blue. Directions: https://maps.app.goo.gl/vPzPRF8h2ZnW9pin7?g_st=ac"
     },
     day2: {
       filename: "Qutubuddin-Khadijah-Walima-18-Jan-2027.ics",

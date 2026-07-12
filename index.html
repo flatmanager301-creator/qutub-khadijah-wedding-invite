@@ -18,7 +18,7 @@
   <link rel="apple-touch-icon" href="assets/icon-192.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Manrope:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Manrope:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght;600&family=Aref+Ruqaa:wght;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script type="application/ld+json">
   {
@@ -81,6 +81,7 @@
     <div class="intro-pattern" aria-hidden="true"></div>
     <div class="intro-glow" aria-hidden="true"></div>
     <div class="intro-top">
+      <img class="intro-emblem" src="assets/swan-calligraphy.png" alt="Wedding monogram" />
       <p class="intro-bismillah" lang="ar" dir="rtl">بسم الله الرحمن الرحيم</p>
       <span class="intro-rule" aria-hidden="true"><i></i></span>
       <p id="introGuest" class="intro-guest">A special invitation awaits you</p>
@@ -168,7 +169,7 @@
           </div>
           <p class="hero-place reveal">Mandsaur · Madhya Pradesh</p>
           <div class="hero-actions reveal">
-            <a class="button button-gold" href="#personal-note">Begin the invitation<svg><use href="#icon-arrow"></use></svg></a>
+            <a class="button button-gold" href="#events">View the invitation<svg><use href="#icon-arrow"></use></svg></a>
             <a class="text-link" href="#events">View celebrations</a>
           </div>
         </div>
@@ -185,29 +186,6 @@
         <p>Join our families as we gather for cherished traditions, heartfelt duas and the beginning of our life together.</p>
         <div class="signature-lockup">
           <span>Qutubuddin</span><i>&amp;</i><span>Khadijah</span>
-        </div>
-      </div>
-    </section>
-
-    <section id="personal-note" class="scratch-section section section-blush">
-      <div class="section-inner scratch-layout">
-        <div class="scratch-copy reveal">
-          <p class="eyebrow">A little surprise for you</p>
-          <h2>Scratch to reveal</h2>
-          <p>Use your finger or cursor over the heart to uncover your personal invitation.</p>
-        </div>
-        <div class="scratch-stage reveal">
-          <div class="scratch-heart" id="scratchHeart">
-            <div class="scratch-message">
-              <img src="assets/swan-seal.png" alt="" />
-              <small>With love, this invitation is for</small>
-              <strong id="scratchGuest">Dear Guest</strong>
-              <p id="scratchSeats">We would be honoured by your presence at both wedding celebrations.</p>
-              <span>Qutubuddin &amp; Khadijah</span>
-            </div>
-            <canvas id="scratchCanvas" aria-label="Scratch to reveal your personal invitation"></canvas>
-          </div>
-          <p id="scratchHint" class="scratch-hint">Gently scratch the heart ✦</p>
         </div>
       </div>
     </section>
@@ -272,7 +250,7 @@
               <div class="event-details">
                 <div><svg><use href="#icon-clock"></use></svg><span><small>Time</small><strong>9:00 AM</strong></span></div>
                 <div><svg><use href="#icon-pin"></use></svg><span><small>Venue</small><strong>Taheri Manzil</strong><em>Tayyeb Pura, Bohra Bakhal, Mandsaur</em></span></div>
-                <div><svg><use href="#icon-users"></use></svg><span><small>Dress code</small><strong>White</strong></span></div>
+                <div><svg><use href="#icon-users"></use></svg><span><small>Dress code</small><strong>Blue</strong></span></div>
               </div>
               <div class="event-actions">
                 <a class="button button-maroon" href="https://maps.app.goo.gl/vPzPRF8h2ZnW9pin7?g_st=ac" target="_blank" rel="noopener">Directions<svg><use href="#icon-arrow"></use></svg></a>
@@ -309,45 +287,49 @@
       </div>
     </section>
 
-    <section class="dress-code section section-maroon">
+        <section class="dress-code section section-maroon">
       <div class="section-inner dress-layout reveal">
-        <div class="dress-number" aria-hidden="true">W</div>
+        <div class="dress-number" aria-hidden="true">D</div>
         <div class="dress-copy">
-          <p class="eyebrow eyebrow-gold">A note for our guests</p>
-          <h2>Dressed in white</h2>
-          <p>We would love for our celebration to be surrounded by the elegance and serenity of white attire.</p>
+          <p class="eyebrow eyebrow-gold">Dress code</p>
+          <h2>A palette for each celebration</h2>
+          <p>For our Mandvo Katho, Manak Thamb &amp; Mehendi Mama Musalo on 17 January, we would love to see our guests in elegant shades of blue. For our Khushi Darees &amp; Walima Lunch on 18 January, white attire will complete the celebration beautifully.</p>
         </div>
-        <div class="dress-palette" aria-label="White attire colour palette">
-          <span style="--swatch:#ffffff"><small>White</small></span>
-          <span style="--swatch:#f6efdf"><small>Ivory</small></span>
-          <span style="--swatch:#e8e2d8"><small>Pearl</small></span>
+        <div class="dress-guide" aria-label="Dress code by celebration">
+          <div class="dress-card"><span class="dress-card-swatch" style="--swatch:#365b9a"></span><div><small>17 January</small><strong>Blue</strong><em>Mandvo Katho, Manak Thamb &amp; Mehendi</em></div></div>
+          <div class="dress-card"><span class="dress-card-swatch" style="--swatch:#ffffff"></span><div><small>18 January</small><strong>White</strong><em>Khushi Darees &amp; Walima Lunch</em></div></div>
         </div>
       </div>
     </section>
 
-    <section class="gallery section section-ivory" id="gallery">
+
+        <section class="gallery section section-ivory" id="gallery">
       <div class="section-inner gallery-inner">
         <div class="section-heading reveal">
-          <p class="eyebrow">A glimpse of us</p>
-          <h2>Moments we hold close</h2>
+          <p class="eyebrow">A graceful celebration</p>
+          <h2>Designed with timeless details</h2>
+          <p>Royal maroon, antique gold, soft ivory and the swan motif come together to create an intimate invitation experience.</p>
         </div>
-        <div class="editorial-gallery">
-          <button class="gallery-photo gallery-main reveal" type="button" data-lightbox="assets/couple-seated.jpg" aria-label="Open seated couple photograph">
-            <img src="assets/couple-seated.jpg" alt="Qutubuddin and Khadijah seated together" loading="lazy" />
-            <span>01</span>
-          </button>
-          <div class="gallery-quote reveal"><svg><use href="#icon-heart"></use></svg><p>Two hearts,<br />one beautiful prayer.</p><small>January 2027</small></div>
-          <button class="gallery-photo gallery-side-a reveal" type="button" data-lightbox="assets/couple-blessing.jpg" aria-label="Open blessing photograph">
-            <img src="assets/couple-blessing.jpg" alt="A tender blessing shared by the couple" loading="lazy" />
-            <span>02</span>
-          </button>
-          <button class="gallery-photo gallery-side-b reveal" type="button" data-lightbox="assets/couple-mirror.jpg" aria-label="Open mirror photograph">
-            <img src="assets/couple-mirror.jpg" alt="Qutubuddin and Khadijah taking a mirror photograph" loading="lazy" />
-            <span>03</span>
-          </button>
+        <div class="editorial-gallery no-photos">
+          <div class="ornamental-card reveal ornamental-card-main">
+            <img src="assets/swan-calligraphy.png" alt="Wedding monogram" class="ornamental-mark" />
+            <small>Our emblem</small>
+            <p>The swan motif carries the invitation with elegance, warmth and grace.</p>
+          </div>
+          <div class="ornamental-card reveal">
+            <span class="ornamental-number">17</span>
+            <small>Day one</small>
+            <p>Mandvo Katho, Manak Thamb &amp; Mehendi Mama Musalo at Taheri Manzil.</p>
+          </div>
+          <div class="ornamental-card reveal">
+            <span class="ornamental-number">18</span>
+            <small>Day two</small>
+            <p>Khushi Darees &amp; Walima Lunch at Mawaid al Burhani.</p>
+          </div>
         </div>
       </div>
     </section>
+
 
     <section class="family section section-soft">
       <div class="section-inner family-card reveal">
@@ -374,8 +356,12 @@
 
         <form id="rsvpForm" class="rsvp-form reveal">
           <div class="form-head">
-            <span>Attendance confirmation</span>
-            <small>Opens in WhatsApp</small>
+            <div class="form-head-mark" aria-hidden="true"><img src="assets/swan-seal.png" alt="" /></div>
+            <div class="form-head-copy">
+              <span>Attendance confirmation</span>
+              <small>Your personalized reply card</small>
+            </div>
+            <div class="form-deadline"><small>Reply by</small><strong>13 JAN</strong></div>
           </div>
           <div class="field full">
             <label for="rsvpName">Guest / family name</label>

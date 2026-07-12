@@ -7,16 +7,15 @@ A mobile-first wedding invitation for **17–18 January 2027** in Mandsaur.
 - Cinematic royal-maroon, blush, ivory and antique-gold design
 - Arabic opening: **بسم الله الرحمن الرحيم**
 - Embossed blush envelope with a tactile swan wax-seal opening
-- Dreamy arch/portal transition with sparkles and layered reveal animations
-- Interactive scratch-to-reveal personalized heart
+- Dreamy arch/portal transition with refined, lightweight reveal animations
 - Personalized guest/family greetings from unique links
 - Per-guest attendee limit
 - Optional invitation access for both days, 17 January only, or 18 January only
 - Live wedding countdown
 - Event timeline, Google Maps buttons and calendar downloads
-- White dress-code presentation
-- Editorial photo gallery with full-screen previews
-- WhatsApp RSVP with a **13 January 2027** deadline
+- Blue dress code for 17 January and white dress code for 18 January
+- Privacy-first ornamental sections with no couple photographs included
+- Ultra-premium WhatsApp RSVP card with a **13 January 2027** deadline
 - Optional RSVP logging and private guest photo/video uploads through Supabase
 - Private guest-link studio with individual links, batch generation and CSV export
 - Mobile quick-navigation dock
@@ -133,7 +132,7 @@ Uploaded files are kept in a private `wedding-photos` bucket under each guest’
 - `config.js` — optional Supabase connection
 - `supabase-setup.sql` — database, storage bucket and security policies
 - `assets/og-card.jpg` — WhatsApp/social preview image
-- `assets/` — couple photographs and swan artwork
+- `assets/` — swan artwork, icons and the privacy-safe social preview image
 
 ## Editing wedding details
 
