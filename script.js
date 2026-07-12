@@ -20,13 +20,34 @@
       const padded = normalized + "=".repeat((4 - (normalized.length % 4)) % 4);
       const binary = atob(padded);
       const bytes = Uint8Array.from(binary, character => character.charCodeAt(0));
-      const parsed = JSON.parse(new TextDecoder().decode(bytes));
-      if (!parsed || typeof parsed.name !== "string") return null;
+      const decoded = new TextDecoder().decode(bytes);
+
+      let name;
+      let seats;
+      let code;
+      let events;
+
+      if (decoded.startsWith("{")) {
+        // Backwards compatibility for previously generated links.
+        const parsed = JSON.parse(decoded);
+        name = parsed?.name;
+        seats = parsed?.seats;
+        code = parsed?.code;
+        events = parsed?.events;
+      } else {
+        const parts = decoded.split("\x1F");
+        if (parts.length !== 4) return null;
+        [name, seats, code, events] = parts;
+        seats = parseInt(seats, 36);
+        events = events === "1" ? "day1" : events === "2" ? "day2" : "both";
+      }
+
+      if (typeof name !== "string") return null;
       return {
-        name: parsed.name.trim().slice(0, 100) || "Guest",
-        seats: Math.min(Math.max(Number(parsed.seats) || 1, 1), 30),
-        code: String(parsed.code || "GUEST").replace(/[^a-z0-9_-]/gi, "").slice(0, 40) || "GUEST",
-        events: normalizeEvents(String(parsed.events || "both"))
+        name: name.trim().slice(0, 100) || "Guest",
+        seats: Math.min(Math.max(Number(seats) || 1, 1), 30),
+        code: String(code || "GUEST").replace(/[^a-z0-9_-]/gi, "").slice(0, 40) || "GUEST",
+        events: normalizeEvents(String(events || "both"))
       };
     } catch (error) {
       console.warn("Could not read the personalized guest link.", error);
@@ -138,7 +159,7 @@
     }
   }
 
-  function createPetals(amount = 18) {
+  function createPetals(amount = 6) {
     const container = $("#petals");
     const template = $("#particleTemplate");
     const fragment = document.createDocumentFragment();
@@ -164,13 +185,13 @@
 
     const finishOpening = () => {
       intro.classList.add("opened");
-      setTimeout(() => 3074(".hero .reveal").forEach((element, index) => {
+      setTimeout(() => $$(".hero .reveal").forEach((element, index) => {
         setTimeout(() => element.classList.add("in-view"), index * 85);
       }), instant ? 10 : 80);
     };
 
     if (instant) finishOpening();
-    else setTimeout(finishOpening, 340);
+    else setTimeout(finishOpening, 120);
   }
 
   function openInvitation() {
@@ -180,10 +201,10 @@
     requestAnimationFrame(() => {
       envelope.classList.add("is-opening");
       intro.classList.add("is-transitioning");
-      createPetals(18);
+      createPetals(6);
     });
     try { sessionStorage.setItem("qk-invite-opened", "1"); } catch (_) { /* File previews may block storage. */ }
-    setTimeout(() => showInvitation(false), 1320);
+    setTimeout(() => showInvitation(false), 760);
   }
 
   function initIntro() {
@@ -699,6 +720,8 @@
   function initLightbox() {
     const lightbox = $("#lightbox");
     const image = $("#lightboxImage");
+    const closeButton = $("#lightboxClose");
+    if (!lightbox || !image || !closeButton) return;
     const close = () => {
       lightbox.hidden = true;
       image.src = "";
@@ -711,10 +734,10 @@
         image.alt = button.querySelector("img")?.alt || "Wedding photograph";
         lightbox.hidden = false;
         document.body.classList.add("lightbox-open");
-        $("#lightboxClose").focus();
+        closeButton.focus();
       });
     });
-    $("#lightboxClose").addEventListener("click", close);
+    closeButton.addEventListener("click", close);
     lightbox.addEventListener("click", event => {
       if (event.target === lightbox) close();
     });

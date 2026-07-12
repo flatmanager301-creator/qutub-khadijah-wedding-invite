@@ -3085,3 +3085,124 @@ body {
   .form-head-mark { width: 44px; }
   .rsvp-form .form-head-copy span { font-size: 1.4rem; }
 }
+
+/* --- final requested fixes: lighter opening, new Arabic font, no share, no timeless-details section --- */
+.intro,
+.intro-top,
+.intro-emblem {
+  overflow: visible;
+}
+
+.intro-emblem {
+  width: clamp(116px, 24vw, 170px) !important;
+  max-width: min(44vw, 170px);
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  margin: 0 auto 1rem;
+  display: block;
+  filter: brightness(1.06) drop-shadow(0 8px 18px rgba(88, 29, 49, .16));
+}
+
+.intro-bismillah,
+.hero-arabic {
+  font-family: "Amiri Quran", "Aref Ruqaa", "Noto Naskh Arabic", serif !important;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.intro-bismillah {
+  font-size: clamp(1.78rem, 5vw, 2.28rem) !important;
+  line-height: 1.5;
+}
+
+.hero-arabic {
+  font-size: clamp(1.56rem, 4vw, 2rem) !important;
+  line-height: 1.55;
+}
+
+/* remove share affordances visually as well */
+#dockShare,
+#shareInvite,
+[data-action="share"] {
+  display: none !important;
+}
+
+/* smoother, lighter envelope opening */
+.portal-bloom,
+.open-pulse,
+.intro-glow {
+  will-change: opacity, transform;
+}
+.intro-glow {
+  filter: blur(8px);
+  opacity: .48;
+}
+.portal-bloom { display: none !important; }
+
+.envelope,
+.envelope * {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.envelope.is-opening {
+  animation: envelope-lift-fast .72s cubic-bezier(.22,.74,.2,1) forwards !important;
+}
+.envelope.is-opening .wax-seal {
+  animation: seal-pop-fast .24s ease-out forwards !important;
+}
+.envelope.is-opening .envelope-flap {
+  animation: flap-open-fast .42s cubic-bezier(.25,.8,.2,1) .04s forwards !important;
+  z-index: 1;
+}
+.envelope.is-opening .letter {
+  animation: letter-rise-fast .5s cubic-bezier(.2,.82,.2,1) .16s forwards !important;
+}
+.envelope.is-opening .envelope-left,
+.envelope.is-opening .envelope-right,
+.envelope.is-opening .envelope-front {
+  animation: none !important;
+}
+
+@keyframes envelope-lift-fast {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-8px) scale(1.01); }
+}
+@keyframes seal-pop-fast {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -54%) scale(.82); opacity: 0; }
+}
+@keyframes flap-open-fast {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(180deg); }
+}
+@keyframes letter-rise-fast {
+  0% { transform: translateY(12%); opacity: .82; }
+  100% { transform: translateY(-39%); opacity: 1; }
+}
+
+.reveal {
+  filter: blur(1px);
+  transform: translateY(16px) scale(.996);
+  transition: opacity .58s ease, filter .58s ease, transform .58s cubic-bezier(.2,.7,.2,1);
+}
+
+/* cleaner finale layout without share button */
+.final-actions {
+  justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .intro-emblem {
+    max-width: min(54vw, 160px);
+    width: clamp(120px, 34vw, 160px) !important;
+    margin-bottom: .9rem;
+  }
+  .intro-bismillah {
+    font-size: clamp(1.64rem, 7.5vw, 1.96rem) !important;
+  }
+  .hero-arabic {
+    font-size: clamp(1.42rem, 6.2vw, 1.78rem) !important;
+  }
+}

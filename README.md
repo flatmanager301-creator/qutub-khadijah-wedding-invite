@@ -142,3 +142,9 @@ Names, event wording, venue names, timings, map links and RSVP contact are in `i
 ## Premium spacing pass
 
 This revision includes a full spacing and responsive-layout refinement across the opening, hero, event cards, RSVP form, gallery, uploads and mobile navigation.
+
+## Short personalized links
+
+The link generator now uses a compact binary-safe token instead of embedding a full JSON object. New guest links are substantially shorter, while previously generated links continue to work.
+
+For example, a personalized URL still uses the format `?g=...`, but the token is typically around half the previous length. Truly code-only links such as `?g=HATIM01` would require a guest lookup database or a bundled guest list.

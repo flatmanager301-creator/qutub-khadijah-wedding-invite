@@ -65,7 +65,7 @@
     <div class="workspace">
       <section class="panel">
         <div class="panel-head"><div><p>Personal invitation</p><h2>Create one guest link</h2></div><span class="number">01</span></div>
-        <p class="description">Each URL carries the guest or family name, invited attendee limit and the functions included in their invitation.</p>
+        <p class="description">Each URL uses a compact private token containing the guest name, attendee limit and invited functions.</p>
         <div class="grid">
           <div class="field full"><label for="baseUrl">Deployed invitation URL</label><input id="baseUrl" type="url" placeholder="https://your-domain.com/" /></div>
           <div class="field full"><label for="guestName">Guest / family name</label><input id="guestName" type="text" placeholder="Hatim Bhai & Family" autocomplete="off" /></div>
@@ -118,7 +118,9 @@
       function normalizeEvents(value) { return ["both","day1","day2"].includes(value) ? value : "both"; }
       function eventLabel(value) { return value === "day1" ? "17 January celebration" : value === "day2" ? "18 January celebration" : "Both wedding celebrations"; }
       function encodePayload(data) {
-        const bytes = new TextEncoder().encode(JSON.stringify(data));
+        const eventCode = data.events === "day1" ? "1" : data.events === "day2" ? "2" : "b";
+        const compact = [data.name, Number(data.seats).toString(36), data.code, eventCode].join("\x1F");
+        const bytes = new TextEncoder().encode(compact);
         let binary = "";
         bytes.forEach(byte => { binary += String.fromCharCode(byte); });
         return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
@@ -161,7 +163,7 @@
         $("#guestCode").value = row.code;
         $("#result").value = row.link;
         updateVisualPreview();
-        showStatus($("#status"), "Personalized invitation generated.");
+        showStatus($("#status"), "Short personalized invitation generated.");
         return row;
       }
 
