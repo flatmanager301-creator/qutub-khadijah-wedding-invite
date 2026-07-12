@@ -3206,3 +3206,69 @@ body {
     font-size: clamp(1.42rem, 6.2vw, 1.78rem) !important;
   }
 }
+
+/* --- Bismillah and hero-logo correction --- */
+.intro-bismillah,
+.hero-arabic {
+  font-family: "Scheherazade New", "Noto Naskh Arabic", serif !important;
+  font-weight: 500 !important;
+  font-style: normal;
+  font-feature-settings: "rlig" 1, "liga" 1, "calt" 1;
+  text-rendering: optimizeLegibility;
+  letter-spacing: 0 !important;
+}
+
+.intro-bismillah {
+  font-size: clamp(1.9rem, 5.3vw, 2.45rem) !important;
+  line-height: 1.42 !important;
+}
+
+.hero-arabic {
+  margin: .25rem 0 1.05rem !important;
+  font-size: clamp(1.72rem, 4.4vw, 2.25rem) !important;
+  line-height: 1.38 !important;
+}
+
+.hero-watermark {
+  display: none !important;
+}
+
+.hero-main-logo {
+  position: relative;
+  z-index: 4;
+  display: block;
+  width: clamp(138px, 18vw, 196px);
+  height: auto;
+  max-width: 100%;
+  margin: 0 auto 1.15rem;
+  padding: 6px;
+  object-fit: contain;
+  object-position: center;
+  transform: none;
+  clip-path: none;
+  overflow: visible;
+  opacity: .98;
+  filter: brightness(1.06) drop-shadow(0 12px 28px rgba(0,0,0,.28));
+}
+
+.hero-copy {
+  overflow: visible;
+  padding-top: clamp(4.3rem, 9vh, 6rem) !important;
+}
+
+@media (max-width: 640px) {
+  .hero-main-logo {
+    width: clamp(132px, 39vw, 168px);
+    margin-bottom: .95rem;
+    padding: 8px;
+  }
+  .intro-bismillah {
+    font-size: clamp(1.78rem, 8vw, 2.15rem) !important;
+  }
+  .hero-arabic {
+    font-size: clamp(1.58rem, 7vw, 1.95rem) !important;
+  }
+  .hero-copy {
+    padding-top: 3.9rem !important;
+  }
+}
