@@ -1,10 +1,36 @@
 (() => {
+  'use strict';
+
+  const body = document.body;
   const opening = document.getElementById('opening');
   const openButton = document.getElementById('openInvitation');
   const site = document.getElementById('site');
   const music = document.getElementById('bgMusic');
   const musicToggle = document.getElementById('musicToggle');
+  const petalLayer = document.getElementById('petalLayer');
   const toast = document.getElementById('toast');
+  const rsvpModal = document.getElementById('rsvpModal');
+  const rsvpForm = document.getElementById('rsvpForm');
+  const openRsvpButton = document.getElementById('openRsvp');
+  const rsvpNameInput = document.getElementById('rsvpName');
+  const guestCount = document.getElementById('guestCount');
+
+  let invitationOpened = false;
+  let lastFocusedElement = null;
+
+  const params = new URLSearchParams(window.location.search);
+  const rawGuest = params.get('g') || params.get('guest') || params.get('name') || 'Guest';
+  const guestName = rawGuest
+    .replace(/[+_-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 80) || 'Guest';
+
+  document.getElementById('guestName').textContent = guestName;
+  rsvpNameInput.value = guestName === 'Guest' ? '' : guestName;
+  document.title = guestName === 'Guest'
+    ? 'Khadijah & Qutubuddin — Darees & Paranwanu'
+    : `${guestName} — Khadijah & Qutubuddin`;
 
   const showToast = (message) => {
     toast.textContent = message;
@@ -13,172 +39,185 @@
     showToast.timer = window.setTimeout(() => toast.classList.remove('is-visible'), 2600);
   };
 
-  // Personalized guest name: ?g=Guest-Name, ?guest=Guest%20Name, or ?name=Guest
-  const params = new URLSearchParams(window.location.search);
-  const rawGuest = params.get('g') || params.get('guest') || params.get('name') || 'Guest';
-  const cleanGuest = rawGuest
-    .replace(/[+_-]+/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .slice(0, 80) || 'Guest';
-  document.getElementById('guestName').textContent = cleanGuest;
-  document.title = cleanGuest === 'Guest'
-    ? 'Khadijah & Qutubuddin — Darees & Paranwanu'
-    : `${cleanGuest} — Khadijah & Qutubuddin`;
-
-  const buildPetals = (container, count, openingMode = false) => {
-    if (!container || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const buildPetals = () => {
+    if (!petalLayer || petalLayer.childElementCount || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const fragment = document.createDocumentFragment();
+    const count = window.innerWidth < 640 ? 10 : 15;
     for (let i = 0; i < count; i += 1) {
       const petal = document.createElement('i');
       petal.style.left = `${Math.random() * 100}%`;
-      petal.style.setProperty('--fall', `${openingMode ? 5 + Math.random() * 4 : 10 + Math.random() * 9}s`);
-      petal.style.setProperty('--delay', `${-Math.random() * 16}s`);
-      petal.style.setProperty('--rot', `${Math.random() * 360}deg`);
-      petal.style.setProperty('--blur', `${Math.random() > .72 ? .6 : 0}px`);
-      petal.style.width = `${7 + Math.random() * 9}px`;
-      petal.style.height = `${11 + Math.random() * 13}px`;
-      petal.style.opacity = `${.32 + Math.random() * .48}`;
-      petal.style.animationName = openingMode ? 'openingFall' : 'fall';
+      petal.style.setProperty('--fall', `${10 + Math.random() * 10}s`);
+      petal.style.setProperty('--delay', `${-Math.random() * 18}s`);
+      petal.style.width = `${7 + Math.random() * 7}px`;
+      petal.style.height = `${11 + Math.random() * 11}px`;
+      petal.style.opacity = `${.25 + Math.random() * .34}`;
       fragment.appendChild(petal);
     }
-    container.appendChild(fragment);
+    petalLayer.appendChild(fragment);
   };
 
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes fall {
-      0% { transform: translate3d(0,-10vh,0) rotate(0deg); }
-      50% { transform: translate3d(28px,52vh,0) rotate(190deg); }
-      100% { transform: translate3d(-22px,112vh,0) rotate(390deg); }
-    }
-    @keyframes openingFall {
-      0% { transform: translate3d(0,-5vh,0) rotate(0deg) scale(.8); }
-      100% { transform: translate3d(20px,110vh,0) rotate(420deg) scale(1.1); }
-    }
-  `;
-  document.head.appendChild(style);
-  buildPetals(document.getElementById('openingPetals'), 16, true);
-  buildPetals(document.getElementById('petalLayer'), 11, false);
+  const setMusicButtonState = (isPlaying) => {
+    musicToggle.classList.toggle('is-paused', !isPlaying);
+    musicToggle.setAttribute('aria-pressed', String(isPlaying));
+    musicToggle.setAttribute('aria-label', isPlaying ? 'Pause music' : 'Play music');
+  };
 
-  const playMusic = async () => {
+  const startMusic = async () => {
     try {
-      music.volume = 0;
+      music.volume = 0.54;
       await music.play();
-      musicToggle.classList.remove('is-paused');
-      musicToggle.setAttribute('aria-pressed', 'true');
-      musicToggle.setAttribute('aria-label', 'Pause music');
-      let volume = 0;
-      const fade = window.setInterval(() => {
-        volume = Math.min(volume + .04, .58);
-        music.volume = volume;
-        if (volume >= .58) window.clearInterval(fade);
-      }, 90);
-    } catch {
-      musicToggle.classList.add('is-paused');
-      musicToggle.setAttribute('aria-pressed', 'false');
-      musicToggle.setAttribute('aria-label', 'Play music');
+      setMusicButtonState(true);
+    } catch (error) {
+      setMusicButtonState(false);
     }
   };
 
-  const openInvitation = () => {
-    if (opening.classList.contains('is-opening')) return;
-    opening.classList.add('is-opening');
-    playMusic();
-    window.setTimeout(() => {
-      opening.classList.add('is-open');
-      site.classList.add('is-visible');
-      site.setAttribute('aria-hidden', 'false');
-      document.body.classList.remove('is-locked');
-      musicToggle.classList.add('is-visible');
-      document.querySelector('.hero .reveal')?.classList.add('is-in-view');
-    }, 1550);
+  const finishOpening = () => {
+    site.classList.add('is-visible');
+    site.setAttribute('aria-hidden', 'false');
+    musicToggle.classList.add('is-visible');
+    body.classList.remove('is-locked');
+    buildPetals();
+    document.querySelector('.hero .reveal')?.classList.add('is-in-view');
   };
-  openButton.addEventListener('click', openInvitation);
+
+  const openInvitation = (instant = false) => {
+    if (invitationOpened) return;
+    invitationOpened = true;
+
+    if (instant) {
+      opening.classList.add('is-gone');
+      finishOpening();
+      return;
+    }
+
+    // Keep play() in the direct tap/click gesture for iOS Safari.
+    startMusic();
+    site.classList.add('is-visible');
+    site.setAttribute('aria-hidden', 'false');
+    opening.classList.add('is-opening');
+
+    window.setTimeout(() => {
+      opening.classList.add('is-gone');
+      finishOpening();
+    }, 1320);
+  };
+
+  // The entire screen is a real button. Click works on iOS/Android; pointerup is a fallback.
+  openButton.addEventListener('click', () => openInvitation(false));
+  openButton.addEventListener('pointerup', (event) => {
+    if (event.pointerType === 'touch') openInvitation(false);
+  }, { passive: true });
+
+  if (params.get('preview') === '1') {
+    openInvitation(true);
+  }
 
   musicToggle.addEventListener('click', async () => {
     if (music.paused) {
       try {
+        music.volume = 0.54;
         await music.play();
-        musicToggle.classList.remove('is-paused');
-        musicToggle.setAttribute('aria-pressed', 'true');
-        musicToggle.setAttribute('aria-label', 'Pause music');
-      } catch {
-        showToast('Tap once more to start the music');
+        setMusicButtonState(true);
+      } catch (error) {
+        showToast('Tap again to start the music');
       }
     } else {
       music.pause();
-      musicToggle.classList.add('is-paused');
-      musicToggle.setAttribute('aria-pressed', 'false');
-      musicToggle.setAttribute('aria-label', 'Play music');
+      setMusicButtonState(false);
     }
   });
 
-  const target = new Date('2027-01-14T13:00:00+05:30').getTime();
-  const countdownEls = {
+  // Countdown: 14 January 2027, 1:00 PM India time.
+  const targetTime = new Date('2027-01-14T13:00:00+05:30').getTime();
+  const countdownElements = {
     days: document.getElementById('days'),
     hours: document.getElementById('hours'),
     minutes: document.getElementById('minutes'),
     seconds: document.getElementById('seconds')
   };
+
   const updateCountdown = () => {
-    const difference = Math.max(0, target - Date.now());
-    const days = Math.floor(difference / 86400000);
-    const hours = Math.floor((difference % 86400000) / 3600000);
-    const minutes = Math.floor((difference % 3600000) / 60000);
-    const seconds = Math.floor((difference % 60000) / 1000);
-    countdownEls.days.textContent = String(days).padStart(3, '0');
-    countdownEls.hours.textContent = String(hours).padStart(2, '0');
-    countdownEls.minutes.textContent = String(minutes).padStart(2, '0');
-    countdownEls.seconds.textContent = String(seconds).padStart(2, '0');
+    const remaining = Math.max(0, targetTime - Date.now());
+    const days = Math.floor(remaining / 86400000);
+    const hours = Math.floor((remaining % 86400000) / 3600000);
+    const minutes = Math.floor((remaining % 3600000) / 60000);
+    const seconds = Math.floor((remaining % 60000) / 1000);
+    countdownElements.days.textContent = String(days).padStart(3, '0');
+    countdownElements.hours.textContent = String(hours).padStart(2, '0');
+    countdownElements.minutes.textContent = String(minutes).padStart(2, '0');
+    countdownElements.seconds.textContent = String(seconds).padStart(2, '0');
   };
   updateCountdown();
   window.setInterval(updateCountdown, 1000);
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-in-view');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: .14, rootMargin: '0px 0px -6% 0px' });
-  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+  // Scroll reveals with a no-IntersectionObserver fallback.
+  const revealElements = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .12, rootMargin: '0px 0px -5% 0px' });
+    revealElements.forEach((element) => observer.observe(element));
+  } else {
+    revealElements.forEach((element) => element.classList.add('is-in-view'));
+  }
 
-  // Calendar file. Uses a one-hour placeholder duration; recipients can adjust it after adding.
-  document.getElementById('addCalendar').addEventListener('click', () => {
-    const ics = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Khadijah & Qutubuddin//Wedding Invitation//EN',
-      'CALSCALE:GREGORIAN',
-      'METHOD:PUBLISH',
-      'BEGIN:VEVENT',
-      'UID:khadijah-qutubuddin-20270114@invitation',
-      'DTSTAMP:20260719T000000Z',
-      'DTSTART;TZID=Asia/Kolkata:20270114T130000',
-      'DTEND;TZID=Asia/Kolkata:20270114T140000',
-      'SUMMARY:Darees & Paranwanu — Khadijah & Qutubuddin',
-      'DESCRIPTION:Darees & Paranwanu of Khadijah and Qutubuddin.',
-      'LOCATION:Zainee Baug\\, Lonavala',
-      'URL:https://maps.app.goo.gl/Fog3jcmgD3iV9pnt9',
-      'BEGIN:VALARM',
-      'TRIGGER:-P1D',
-      'ACTION:DISPLAY',
-      'DESCRIPTION:Darees & Paranwanu tomorrow',
-      'END:VALARM',
-      'END:VEVENT',
-      'END:VCALENDAR'
-    ].join('\r\n');
-    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'Khadijah-Qutubuddin-Darees-Paranwanu.ics';
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-    showToast('Calendar invitation prepared');
+  const openModal = () => {
+    lastFocusedElement = document.activeElement;
+    rsvpModal.classList.add('is-open');
+    rsvpModal.setAttribute('aria-hidden', 'false');
+    body.classList.add('modal-open');
+    window.setTimeout(() => rsvpNameInput.focus(), 180);
+  };
+
+  const closeModal = () => {
+    rsvpModal.classList.remove('is-open');
+    rsvpModal.setAttribute('aria-hidden', 'true');
+    body.classList.remove('modal-open');
+    lastFocusedElement?.focus?.();
+  };
+
+  openRsvpButton.addEventListener('click', openModal);
+  rsvpModal.querySelectorAll('[data-close-modal]').forEach((element) => element.addEventListener('click', closeModal));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && rsvpModal.classList.contains('is-open')) closeModal();
+  });
+
+  rsvpForm.addEventListener('change', (event) => {
+    if (event.target.name !== 'attendance') return;
+    const attending = event.target.value === 'Accepts with pleasure';
+    guestCount.disabled = !attending;
+    if (!attending) guestCount.value = '1';
+  });
+
+  rsvpForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!rsvpForm.reportValidity()) return;
+
+    const formData = new FormData(rsvpForm);
+    const name = String(formData.get('name') || '').trim();
+    const attendance = String(formData.get('attendance') || '');
+    const guests = guestCount.disabled ? 'Not applicable' : String(formData.get('guests') || '1');
+    const message = String(formData.get('message') || '').trim();
+
+    const lines = [
+      'RSVP — Darees & Paranwanu',
+      'Khadijah & Qutubuddin · 14 January 2027',
+      '',
+      `Name: ${name}`,
+      `Response: ${attendance}`,
+      `Number of guests: ${guests}`
+    ];
+    if (message) lines.push(`Message: ${message}`);
+
+    const whatsappUrl = `https://wa.me/918097335253?text=${encodeURIComponent(lines.join('\n'))}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    showToast('Your RSVP message is ready in WhatsApp');
+    closeModal();
   });
 })();

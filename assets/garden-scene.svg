@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500" fill="none">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff9f4"/><stop offset=".48" stop-color="#f7e6e3"/><stop offset="1" stop-color="#ecdfd1"/></linearGradient>
+    <linearGradient id="pond" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#c9d6cf"/><stop offset=".65" stop-color="#a9bdb7"/><stop offset="1" stop-color="#7f9d96"/></linearGradient>
+    <radialGradient id="rose" cx="35%" cy="30%" r="75%"><stop stop-color="#fffaf7"/><stop offset=".35" stop-color="#f4d6d0"/><stop offset="1" stop-color="#b87378"/></radialGradient>
+    <radialGradient id="cream" cx="35%" cy="28%" r="76%"><stop stop-color="#fffef9"/><stop offset=".48" stop-color="#f4e5d5"/><stop offset="1" stop-color="#cfaa77"/></radialGradient>
+    <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#bdc9b1"/><stop offset=".52" stop-color="#84977b"/><stop offset="1" stop-color="#51624f"/></linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="18"/></filter>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#715250" flood-opacity=".18"/></filter>
+    <pattern id="paper" width="160" height="160" patternUnits="userSpaceOnUse"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency=".72" numOctaves="3"/></filter><rect width="160" height="160" filter="url(#noise)" opacity=".035"/></pattern>
+    <g id="flower"><g fill="url(#rose)"><ellipse rx="58" ry="31" transform="translate(0 -30)"/><ellipse rx="58" ry="31" transform="rotate(45) translate(0 -30)"/><ellipse rx="58" ry="31" transform="rotate(90) translate(0 -30)"/><ellipse rx="58" ry="31" transform="rotate(135) translate(0 -30)"/></g><circle r="26" fill="url(#cream)"/></g>
+    <g id="small"><circle r="18" fill="#fffaf4"/><circle cx="18" cy="-8" r="16" fill="#f0d0cd"/><circle cx="19" cy="13" r="15" fill="#fff4eb"/><circle cx="1" cy="23" r="15" fill="#ead0c7"/><circle cx="-16" cy="10" r="15" fill="#fffaf4"/><circle cx="4" cy="7" r="7" fill="#c99d5d"/></g>
+    <g id="branch"><path d="M0 250C42 185 70 116 108 0" stroke="#77866f" stroke-width="7" stroke-linecap="round"/><g fill="url(#leaf)"><path d="M18 205C-20 192-40 164-34 126C4 132 26 160 18 205Z"/><path d="M44 167C82 136 116 132 145 153C118 185 84 191 44 167Z"/><path d="M55 126C21 112 4 84 12 52C47 62 66 88 55 126Z"/><path d="M78 88C110 61 139 59 165 78C141 106 112 112 78 88Z"/></g></g>
+  </defs>
+  <rect width="1200" height="1500" fill="url(#sky)"/>
+  <rect width="1200" height="1500" fill="url(#paper)"/>
+  <circle cx="200" cy="210" r="180" fill="#fff" opacity=".42" filter="url(#blur)"/><circle cx="1020" cy="330" r="210" fill="#fff" opacity=".3" filter="url(#blur)"/>
+  <path d="M0 975C270 895 400 900 600 945C830 995 955 930 1200 870V1500H0V975Z" fill="url(#pond)"/>
+  <g opacity=".48" stroke="#eef5f0" stroke-width="5"><path d="M40 1090C300 1030 520 1040 730 1085C920 1127 1070 1100 1180 1060"/><path d="M70 1195C330 1150 570 1160 805 1200C970 1228 1080 1215 1170 1188"/><path d="M20 1320C260 1275 505 1284 720 1322C930 1360 1085 1342 1190 1308"/></g>
+
+  <!-- garden arch -->
+  <path d="M165 890C148 500 290 160 600 135C910 160 1052 500 1035 890" stroke="#8d967f" stroke-width="20" opacity=".55"/>
+  <path d="M205 890C190 520 320 205 600 180C880 205 1010 520 995 890" stroke="#c7ad87" stroke-width="4" opacity=".75"/>
+
+  <!-- dense flowers left -->
+  <g transform="translate(30 80)">
+    <use href="#branch" transform="translate(30 680) rotate(-28) scale(1.5)"/><use href="#branch" transform="translate(190 470) rotate(-8) scale(1.35)"/><use href="#branch" transform="translate(300 260) rotate(18) scale(1.15)"/>
+    <use href="#flower" transform="translate(180 650) scale(1.35)"/><use href="#flower" transform="translate(255 475) scale(1.05)"/><use href="#flower" transform="translate(355 315) scale(.92)"/><use href="#flower" transform="translate(110 820) scale(.95)"/>
+    <use href="#small" transform="translate(70 570)"/><use href="#small" transform="translate(315 580) scale(.8)"/><use href="#small" transform="translate(410 225) scale(.75)"/><use href="#small" transform="translate(230 775) scale(.8)"/>
+  </g>
+  <g transform="translate(1170 80) scale(-1 1)">
+    <use href="#branch" transform="translate(30 680) rotate(-28) scale(1.5)"/><use href="#branch" transform="translate(190 470) rotate(-8) scale(1.35)"/><use href="#branch" transform="translate(300 260) rotate(18) scale(1.15)"/>
+    <use href="#flower" transform="translate(180 650) scale(1.35)"/><use href="#flower" transform="translate(255 475) scale(1.05)"/><use href="#flower" transform="translate(355 315) scale(.92)"/><use href="#flower" transform="translate(110 820) scale(.95)"/>
+    <use href="#small" transform="translate(70 570)"/><use href="#small" transform="translate(315 580) scale(.8)"/><use href="#small" transform="translate(410 225) scale(.75)"/><use href="#small" transform="translate(230 775) scale(.8)"/>
+  </g>
+
+  <!-- swans -->
+  <g transform="translate(420 990)" fill="#fffaf3" stroke="#d0b697" stroke-width="4">
+    <path d="M20 120C-12 68 10 15 56-7C84-20 101-42 89-70C77-96 53-106 29-93C52-122 87-126 111-105C142-78 131-36 98-9C74 11 70 35 94 59C120 85 153 91 187 81C156 130 94 151 20 120Z"/>
+    <path d="M45 68C80 42 119 47 153 75C119 112 76 112 45 68Z" fill="#f4e2dc" opacity=".7"/>
+    <circle cx="81" cy="-72" r="4" fill="#56413e" stroke="none"/><path d="M91-75l23 8-23 8Z" fill="#c88b72" stroke="none"/>
+  </g>
+  <g transform="translate(780 990) scale(-1 1)" fill="#fffaf3" stroke="#d0b697" stroke-width="4">
+    <path d="M20 120C-12 68 10 15 56-7C84-20 101-42 89-70C77-96 53-106 29-93C52-122 87-126 111-105C142-78 131-36 98-9C74 11 70 35 94 59C120 85 153 91 187 81C156 130 94 151 20 120Z"/>
+    <path d="M45 68C80 42 119 47 153 75C119 112 76 112 45 68Z" fill="#f4e2dc" opacity=".7"/>
+    <circle cx="81" cy="-72" r="4" fill="#56413e" stroke="none"/><path d="M91-75l23 8-23 8Z" fill="#c88b72" stroke="none"/>
+  </g>
+  <path d="M600 986C574 950 532 950 505 985" stroke="#c998a1" stroke-width="5" stroke-linecap="round" opacity=".65"/>
+  <g fill="#e6b4b3" opacity=".72"><ellipse cx="155" cy="1020" rx="9" ry="15" transform="rotate(24 155 1020)"/><ellipse cx="1050" cy="790" rx="9" ry="15" transform="rotate(-26 1050 790)"/><ellipse cx="930" cy="1220" rx="8" ry="14" transform="rotate(18 930 1220)"/><ellipse cx="250" cy="1260" rx="8" ry="14" transform="rotate(-20 250 1260)"/></g>
+</svg>

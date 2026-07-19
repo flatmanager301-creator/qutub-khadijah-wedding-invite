@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Khadijah and Qutubuddin//Darees and Paranwanu//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:khadijah-qutubuddin-20270114@invitation
+DTSTAMP:20260719T000000Z
+DTSTART;TZID=Asia/Kolkata:20270114T130000
+DTEND;TZID=Asia/Kolkata:20270114T140000
+SUMMARY:Darees & Paranwanu — Khadijah & Qutubuddin
+DESCRIPTION:Darees & Paranwanu of Khadijah and Qutubuddin.
+LOCATION:Zainee Baug\, Lonavala
+URL:https://maps.app.goo.gl/Fog3jcmgD3iV9pnt9
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Darees & Paranwanu tomorrow
+END:VALARM
+END:VEVENT
+END:VCALENDAR
