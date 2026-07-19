@@ -1,26 +1,18 @@
-# Khadijah & Qutubuddin — Darees & Paranwanu
+# Khadijah & Qutubuddin — Darees & Paranwanu (Version 4)
 
-Static mobile-first invitation website for Cloudflare Pages.
+This version replaces the envelope controller with a mobile-safe animation that avoids fragile 3D transforms.
 
-## Deploy
-Upload the contents of this folder to the existing Cloudflare Pages project, or push the contents to the connected GitHub repository. The deployment root must contain `index.html`.
+## Deploy correctly
+Upload **all files inside this folder** to the deployment root. The root must directly contain:
+- `index.html`
+- `styles-v4.css`
+- `script-v4.js`
+- `event.ics`
+- `_headers`
+- the `assets` folder
+
+Do not upload the outer folder itself. After deployment, test in a private/incognito tab once.
 
 ## Personalised links
-Open `generate.html` after deployment, enter a guest name, and copy the generated link.
-
-Manual format:
-
-`https://your-domain.example/?g=Guest%20Name`
-
-## Included
-- Full-screen mobile-safe envelope opening
-- Floral garden hero with Arabic-first presentation
-- Personalised guest greeting
-- Music control
-- Live countdown
-- Event, map and calendar links
-- Invitation-family section
-- RSVP popup that prepares a WhatsApp response to Khadijah
-
-
-Version 3: rebuilt the opening into a visible full-screen envelope with a wax-seal break, 3D flap opening, rising invitation card, and mobile-safe animation. Arabic typography changed to Amiri / Amiri Quran / Noto Naskh Arabic.
+Use `generate.html`, or append:
+`?g=Guest%20Name`
