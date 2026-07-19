@@ -15,9 +15,10 @@
   --shadow: 0 28px 80px rgba(87, 55, 55, .15);
   --serif: "Cormorant Garamond", Georgia, serif;
   --sans: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --arabic-display: "Aref Ruqaa Ink", "Scheherazade New", serif;
-  --arabic-body: "Scheherazade New", "Amiri", serif;
-  --urdu: "Noto Nastaliq Urdu", "Scheherazade New", serif;
+  --arabic-display: "Amiri", "Noto Naskh Arabic", serif;
+  --arabic-quran: "Amiri Quran", "Amiri", serif;
+  --arabic-body: "Noto Naskh Arabic", "Amiri", serif;
+  --urdu: "Noto Nastaliq Urdu", "Noto Naskh Arabic", serif;
 }
 
 * { box-sizing: border-box; }
@@ -47,20 +48,38 @@ svg { display: block; }
 .urdu { font-family: var(--urdu); }
 .noscript { position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; padding: 2rem; background: var(--ivory); text-align: center; }
 
-/* Opening: intentionally no text anywhere on the envelope. */
+/* Opening: a clearly visible, full-screen envelope with a true flap-opening sequence. */
 .opening {
   position: fixed;
   inset: 0;
   z-index: 1000;
   min-height: 100vh;
   min-height: 100svh;
+  display: grid;
+  place-items: center;
   overflow: hidden;
-  background: #f8efea;
+  background: #ead7d2;
   opacity: 1;
   visibility: visible;
-  transition: opacity .78s ease, visibility 0s linear .78s;
+  transition: opacity .75s ease, visibility 0s linear .75s;
+  perspective: 1500px;
 }
 .opening.is-gone { opacity: 0; visibility: hidden; pointer-events: none; }
+.opening-garden {
+  position: absolute;
+  inset: -4%;
+  background:
+    linear-gradient(180deg, rgba(255,250,246,.20), rgba(97,62,60,.16)),
+    url("assets/garden-scene.svg") center/cover no-repeat;
+  filter: saturate(.86) brightness(.98);
+  transform: scale(1.04);
+}
+.opening-garden::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 45%, transparent 18%, rgba(66,39,40,.13) 100%);
+}
 .open-trigger {
   position: absolute;
   inset: 0;
@@ -75,94 +94,196 @@ svg { display: block; }
   touch-action: manipulation;
   -webkit-user-select: none;
   user-select: none;
+  display: grid;
+  place-items: center;
 }
 .open-trigger:focus-visible { outline: 3px solid var(--rose); outline-offset: -8px; }
-.envelope-paper {
+.envelope-stage {
+  position: relative;
+  width: min(100vw, 520px);
+  height: min(100svh, 860px);
+  overflow: hidden;
+  background: #f8ede7;
+  border: 1px solid rgba(132,88,73,.33);
+  box-shadow: 0 28px 90px rgba(63,36,38,.34), inset 0 0 80px rgba(115,76,65,.08);
+  transform-style: preserve-3d;
+  isolation: isolate;
+}
+.envelope-stage::after {
+  content: "";
   position: absolute;
   inset: 0;
-  overflow: hidden;
-  background:
-    linear-gradient(145deg, rgba(255,255,255,.62), transparent 45%),
-    linear-gradient(180deg, #fffdfb, #f1e2d8);
+  z-index: 20;
+  pointer-events: none;
+  box-shadow: inset 0 0 55px rgba(83,50,47,.12);
 }
-.envelope-paper::before {
-  content: "";
+.envelope-back {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: url("assets/embossed-pattern.svg") center/250px repeat;
-  opacity: .52;
-  mix-blend-mode: multiply;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.78), transparent 44%),
+    linear-gradient(180deg, #fffaf6, #ead7cd);
 }
-.envelope-paper::after {
+.envelope-back::before,
+.envelope-fold::after,
+.envelope-flap::after {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 1;
-  box-shadow: inset 0 0 80px rgba(104,72,66,.13);
-  pointer-events: none;
+  background: url("assets/embossed-pattern.svg") center/235px repeat;
+  opacity: .55;
+  mix-blend-mode: multiply;
 }
-.envelope-panel {
+.invitation-peek {
   position: absolute;
   z-index: 2;
-  inset: 0;
+  left: 7%;
+  right: 7%;
+  top: 7%;
+  height: 76%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(186,145,96,.48);
+  border-radius: 44% 44% 22px 22px / 8% 8% 22px 22px;
   background:
-    linear-gradient(145deg, rgba(255,255,255,.75), transparent 46%),
-    linear-gradient(160deg, #fffdf9, #f0e0d5);
-  filter: drop-shadow(0 9px 13px rgba(91,63,59,.12));
-  transition: transform 1.28s cubic-bezier(.22,.78,.22,1), opacity .8s ease;
+    linear-gradient(rgba(255,252,247,.88), rgba(250,238,231,.90)),
+    url("assets/embossed-pattern.svg") center/220px repeat;
+  box-shadow: 0 18px 48px rgba(80,48,45,.18);
+  transform: translateY(23%);
+  transition: transform 1.05s cubic-bezier(.18,.78,.22,1) .82s;
   will-change: transform;
 }
-.envelope-panel::after {
+.invitation-peek img {
+  position: relative;
+  z-index: 2;
+  width: clamp(88px, 25vw, 132px);
+  aspect-ratio: 1;
+  object-fit: cover;
+  padding: 5px;
+  border: 1px solid rgba(181,143,104,.56);
+  border-radius: 50%;
+  background: rgba(255,255,255,.76);
+  box-shadow: 0 14px 32px rgba(84,52,48,.14);
+}
+.peek-flower {
+  position: absolute;
+  bottom: -4%;
+  width: 65%;
+  aspect-ratio: 1;
+  background: url("assets/floral-frame.svg") 0 100%/205% auto no-repeat;
+  opacity: .75;
+}
+.peek-flower--left { left: -22%; }
+.peek-flower--right { right: -22%; transform: scaleX(-1); }
+.envelope-fold,
+.envelope-flap {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.78), transparent 44%),
+    linear-gradient(160deg, #fffaf6, #ead8cd);
+  filter: drop-shadow(0 8px 10px rgba(85,55,49,.12));
+  backface-visibility: hidden;
+}
+.envelope-fold { z-index: 5; }
+.envelope-fold--left {
+  clip-path: polygon(0 0, 53% 52%, 0 100%);
+  border-right: 2px solid rgba(157,111,79,.55);
+}
+.envelope-fold--right {
+  clip-path: polygon(100% 0, 47% 52%, 100% 100%);
+  border-left: 2px solid rgba(157,111,79,.55);
+}
+.envelope-fold--bottom {
+  z-index: 6;
+  clip-path: polygon(0 100%, 100% 100%, 50% 51%);
+  border-top: 2px solid rgba(157,111,79,.58);
+}
+.envelope-flap {
+  z-index: 8;
+  clip-path: polygon(0 0, 100% 0, 50% 53%);
+  border-bottom: 2px solid rgba(148,99,71,.62);
+  transform-origin: top center;
+  transform: rotateX(0deg);
+  transition: transform 1.15s cubic-bezier(.2,.74,.18,1) .25s, filter .6s ease;
+  will-change: transform;
+}
+.envelope-flap::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: url("assets/embossed-pattern.svg") center/260px repeat;
-  opacity: .32;
-  mix-blend-mode: multiply;
+  background: linear-gradient(180deg, rgba(255,255,255,.20), rgba(109,72,62,.11));
 }
-.envelope-panel--left { clip-path: polygon(0 0, 52% 50%, 0 100%); border-right: 1px solid rgba(177,139,97,.45); transform-origin: left center; }
-.envelope-panel--right { clip-path: polygon(100% 0, 48% 50%, 100% 100%); border-left: 1px solid rgba(177,139,97,.45); transform-origin: right center; }
-.envelope-panel--top { clip-path: polygon(0 0, 100% 0, 50% 51%); border-bottom: 1px solid rgba(177,139,97,.5); transform-origin: top center; }
-.envelope-panel--bottom { clip-path: polygon(0 100%, 100% 100%, 50% 49%); border-top: 1px solid rgba(177,139,97,.5); transform-origin: bottom center; }
-.opening.is-opening .envelope-panel--left { transform: translateX(-105%); opacity: .6; }
-.opening.is-opening .envelope-panel--right { transform: translateX(105%); opacity: .6; }
-.opening.is-opening .envelope-panel--top { transform: translateY(-108%); opacity: .45; }
-.opening.is-opening .envelope-panel--bottom { transform: translateY(108%); opacity: .45; }
 .wax-seal {
   position: absolute;
   left: 50%;
-  top: 50%;
-  z-index: 8;
-  width: clamp(118px, 29vw, 166px);
+  top: 52%;
+  z-index: 12;
+  width: clamp(112px, 30vw, 154px);
   aspect-ratio: 1;
   transform: translate(-50%,-50%);
-  padding: 8px;
+  padding: 9px;
   border-radius: 50%;
-  background:
-    radial-gradient(circle at 32% 25%, #b25a68, #7f3040 68%, #5c1e2d);
-  border: 2px solid rgba(90,29,43,.8);
-  box-shadow:
-    0 18px 42px rgba(84,33,43,.34),
-    inset 0 0 0 4px rgba(255,255,255,.12),
-    inset 5px 7px 12px rgba(255,255,255,.16),
-    inset -8px -10px 16px rgba(50,12,22,.28);
-  transition: transform .72s cubic-bezier(.2,.75,.2,1), opacity .45s ease;
+  background: radial-gradient(circle at 32% 25%, #b96370, #7f3040 68%, #561a28);
+  border: 2px solid rgba(79,22,36,.82);
+  box-shadow: 0 18px 42px rgba(84,33,43,.38), inset 0 0 0 4px rgba(255,255,255,.12), inset 5px 7px 12px rgba(255,255,255,.16), inset -8px -10px 16px rgba(50,12,22,.3);
+  transition: transform .52s cubic-bezier(.22,.78,.22,1), opacity .42s ease;
   animation: sealPulse 2.4s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 .wax-seal::before,
 .wax-seal::after {
   content: "";
   position: absolute;
   border-radius: 50%;
-  border: 1px solid rgba(255,232,224,.35);
+  border: 1px solid rgba(255,232,224,.40);
 }
 .wax-seal::before { inset: 7px; }
-.wax-seal::after { inset: -9px; border-color: rgba(142,69,82,.16); }
+.wax-seal::after { inset: -10px; border-color: rgba(142,69,82,.22); }
 .wax-seal img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; filter: saturate(.92) contrast(1.02); }
-.wax-glow { position: absolute; inset: -18px; border-radius: 50%; box-shadow: 0 0 0 1px rgba(160,91,99,.15), 0 0 42px rgba(169,102,109,.24); }
-.opening.is-opening .wax-seal { transform: translate(-50%,-50%) scale(.45) rotate(-7deg); opacity: 0; animation: none; }
-@keyframes sealPulse { 0%,100% { transform: translate(-50%,-50%) scale(1); } 50% { transform: translate(-50%,-50%) scale(1.035); } }
+.wax-glow { position: absolute; inset: -18px; border-radius: 50%; box-shadow: 0 0 0 1px rgba(160,91,99,.15), 0 0 48px rgba(169,102,109,.30); }
+
+.opening.is-opening .wax-seal {
+  transform: translate(-50%,-50%) scale(.18) rotate(-14deg);
+  opacity: 0;
+  animation: none;
+}
+.opening.is-opening .envelope-flap {
+  transform: rotateX(-178deg);
+  filter: brightness(.93);
+}
+.opening.is-opening .invitation-peek { transform: translateY(-5%); }
+.opening.is-opening .envelope-stage {
+  animation: envelopeExit .82s cubic-bezier(.4,0,.2,1) 1.72s forwards;
+}
+.opening.is-opening .opening-garden { animation: gardenFade 2.5s ease forwards; }
+
+@keyframes sealPulse {
+  0%,100% { transform: translate(-50%,-50%) scale(1); }
+  50% { transform: translate(-50%,-50%) scale(1.035); }
+}
+@keyframes envelopeExit {
+  to { transform: translateY(18vh) scale(.91); opacity: 0; }
+}
+@keyframes gardenFade {
+  0%,62% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (max-width: 600px) {
+  .envelope-stage {
+    width: 100vw;
+    height: 100svh;
+    border: 0;
+    box-shadow: inset 0 0 70px rgba(86,53,49,.12);
+  }
+  .envelope-fold--left { border-right-width: 1.5px; }
+  .envelope-fold--right { border-left-width: 1.5px; }
+  .envelope-fold--bottom,
+  .envelope-flap { border-width: 1.5px; }
+}
 
 /* Main */
 .site { position: relative; opacity: 0; visibility: hidden; transition: opacity .95s ease; }
@@ -192,7 +313,7 @@ svg { display: block; }
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
 }
-.bismillah { margin: 0; color: var(--rose-deep); font-size: clamp(1.45rem, 5vw, 2.25rem); line-height: 1.6; }
+.bismillah { font-family: var(--arabic-quran); margin: 0; color: var(--rose-deep); font-size: clamp(1.45rem, 5vw, 2.25rem); line-height: 1.6; }
 .tiny-ornament, .ornament-line { display: flex; align-items: center; justify-content: center; gap: .55rem; margin: .35rem auto; color: var(--champagne); }
 .tiny-ornament span, .ornament-line span { width: 44px; height: 1px; background: linear-gradient(90deg, transparent, currentColor); }
 .tiny-ornament span:last-child, .ornament-line span:last-child { transform: scaleX(-1); }

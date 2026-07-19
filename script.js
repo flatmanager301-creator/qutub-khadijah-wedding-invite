@@ -100,7 +100,7 @@
     window.setTimeout(() => {
       opening.classList.add('is-gone');
       finishOpening();
-    }, 1320);
+    }, 2520);
   };
 
   // The entire screen is a real button. Click works on iOS/Android; pointerup is a fallback.

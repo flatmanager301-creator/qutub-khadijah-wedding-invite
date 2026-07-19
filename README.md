@@ -21,3 +21,6 @@ Manual format:
 - Event, map and calendar links
 - Invitation-family section
 - RSVP popup that prepares a WhatsApp response to Khadijah
+
+
+Version 3: rebuilt the opening into a visible full-screen envelope with a wax-seal break, 3D flap opening, rising invitation card, and mobile-safe animation. Arabic typography changed to Amiri / Amiri Quran / Noto Naskh Arabic.

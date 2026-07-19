@@ -15,7 +15,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600&family=Noto+Nastaliq+Urdu:wght@400;500;600&family=Scheherazade+New:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Amiri+Quran&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="preload" href="assets/garden-scene.svg" as="image" type="image/svg+xml" />
   <link rel="preload" href="assets/floral-frame.svg" as="image" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
@@ -27,14 +27,24 @@
     <source src="assets/invitation-music.m4a" type="audio/mp4" />
   </audio>
 
-  <!-- Full-screen, mobile-safe envelope. The whole screen is tappable. -->
+  <!-- A real full-screen envelope: seal breaks, flap opens, card rises, then the invitation is revealed. -->
   <section class="opening" id="opening" aria-label="Open invitation">
+    <div class="opening-garden" aria-hidden="true"></div>
     <button class="open-trigger" id="openInvitation" type="button" aria-label="Open the invitation">
-      <span class="envelope-paper" aria-hidden="true">
-        <span class="envelope-panel envelope-panel--left"></span>
-        <span class="envelope-panel envelope-panel--right"></span>
-        <span class="envelope-panel envelope-panel--top"></span>
-        <span class="envelope-panel envelope-panel--bottom"></span>
+      <span class="envelope-stage" aria-hidden="true">
+        <span class="envelope-back"></span>
+
+        <span class="invitation-peek">
+          <span class="peek-flower peek-flower--left"></span>
+          <span class="peek-flower peek-flower--right"></span>
+          <img src="assets/logo.jpeg" alt="" />
+        </span>
+
+        <span class="envelope-fold envelope-fold--left"></span>
+        <span class="envelope-fold envelope-fold--right"></span>
+        <span class="envelope-fold envelope-fold--bottom"></span>
+        <span class="envelope-flap"></span>
+
         <span class="wax-seal">
           <span class="wax-glow"></span>
           <img src="assets/logo.jpeg" alt="" />
